@@ -1,0 +1,242 @@
+/* GoalCard.css */
+
+.goal-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all var(--transition-fast);
+}
+
+.goal-card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.goal-card.completed {
+  background: rgba(78, 204, 163, 0.08);
+  border-color: rgba(78, 204, 163, 0.3);
+}
+
+/* Checkbox Type */
+.goal-card.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  cursor: pointer;
+}
+
+.goal-card.checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.goal-checkbox-visual {
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  border-radius: 8px;
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.goal-card.completed .goal-checkbox-visual {
+  background: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.goal-checkbox-visual svg {
+  width: 14px;
+  height: 14px;
+  color: white;
+}
+
+.goal-card.checkbox .goal-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.goal-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.goal-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.goal-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  transition: all var(--transition-fast);
+}
+
+.goal-card.completed .goal-name {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.goal-label {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.goal-status {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-complete {
+  color: var(--color-success);
+}
+
+.status-pending {
+  color: var(--color-text-muted);
+}
+
+/* Number Type */
+.goal-card.number {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.goal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.goal-card.number .goal-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.goal-percentage {
+  font-size: 16px;
+  font-weight: 700;
+  transition: color var(--transition-fast);
+}
+
+.goal-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.control-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  line-height: 1;
+}
+
+.control-btn:hover:not(:disabled) {
+  background: var(--color-card-hover);
+  border-color: var(--color-accent);
+}
+
+.control-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.number-display {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.number-input {
+  width: 50px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary);
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.number-input::-webkit-outer-spin-button,
+.number-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.number-input:focus {
+  outline: none;
+}
+
+.target-label {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.goal-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--color-card);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width var(--transition-normal), background-color var(--transition-fast);
+}
+
+/* Responsive */
+@media (min-width: 640px) {
+  .goal-card.checkbox,
+  .goal-card.number {
+    padding: 18px;
+  }
+  
+  .goal-icon {
+    font-size: 28px;
+  }
+  
+  .goal-name {
+    font-size: 16px;
+  }
+  
+  .control-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+  }
+  
+  .number-input {
+    width: 60px;
+    height: 40px;
+    font-size: 22px;
+  }
+}

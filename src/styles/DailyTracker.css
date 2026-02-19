@@ -1,0 +1,361 @@
+/* DailyTracker.css - Updated for unified daily items list */
+
+.daily-tracker {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Header */
+.tracker-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
+}
+
+.brand-icon svg {
+  width: 24px;
+  height: 24px;
+  color: white;
+}
+
+.brand h1 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* Date Card */
+.date-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+}
+
+.nav-btn {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-primary);
+}
+
+.nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.nav-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.date-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.day-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.day-number {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.today-tag {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--color-accent);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.date-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.hijri {
+  font-size: 13px;
+  color: var(--color-accent-light);
+  font-weight: 500;
+}
+
+.gregorian {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+/* Progress Section */
+.progress-section {
+  display: flex;
+  justify-content: center;
+}
+
+.progress-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 20px 40px;
+}
+
+.progress-ring-container {
+  position: relative;
+}
+
+.progress-ring {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--color) calc(var(--progress) * 3.6deg),
+    var(--color-card) 0deg
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.progress-ring::before {
+  content: '';
+  position: absolute;
+  width: 115px;
+  height: 115px;
+  background: var(--color-bg-primary);
+  border-radius: 50%;
+}
+
+.progress-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.progress-percent {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+
+.progress-text {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.progress-status {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Items Section */
+.items-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Success Message */
+.success-message {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, rgba(78, 204, 163, 0.15), rgba(78, 204, 163, 0.05));
+  border: 1px solid rgba(78, 204, 163, 0.3);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  animation: slideUp 0.5s ease-out;
+}
+
+.success-icon {
+  font-size: 28px;
+}
+
+.success-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.success-content strong {
+  font-size: 15px;
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.success-content span {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (min-width: 640px) {
+  .daily-tracker {
+    gap: 24px;
+  }
+  
+  .brand h1 {
+    font-size: 26px;
+  }
+  
+  .brand-icon {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .brand-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .date-card {
+    padding: 16px 20px;
+  }
+  
+  .nav-btn {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .nav-btn svg {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .day-number {
+    font-size: 20px;
+  }
+  
+  .progress-summary {
+    padding: 24px 48px;
+  }
+  
+  .progress-ring {
+    width: 160px;
+    height: 160px;
+  }
+  
+  .progress-ring::before {
+    width: 130px;
+    height: 130px;
+  }
+  
+  .progress-percent {
+    font-size: 36px;
+  }
+  
+  .progress-text {
+    font-size: 11px;
+  }
+  
+  .progress-status {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .progress-ring {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .progress-ring::before {
+    width: 145px;
+    height: 145px;
+  }
+  
+  .progress-percent {
+    font-size: 42px;
+  }
+}
+
+/* Touch optimizations */
+@media (hover: none) {
+  .nav-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}

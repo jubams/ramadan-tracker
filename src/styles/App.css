@@ -1,0 +1,132 @@
+/* App.css - Main application styles - Clean Minimalist Design */
+
+:root {
+  /* Color Palette */
+  --color-bg-primary: #1a1a2e;
+  --color-bg-secondary: #16213e;
+  --color-bg-tertiary: #0f3460;
+  --color-accent: #e94560;
+  --color-accent-light: #ff6b6b;
+  --color-success: #4ecca3;
+  --color-warning: #ffc93c;
+  --color-danger: #e94560;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.7);
+  --color-text-muted: rgba(255, 255, 255, 0.5);
+  --color-card: rgba(255, 255, 255, 0.05);
+  --color-card-hover: rgba(255, 255, 255, 0.08);
+  --color-border: rgba(255, 255, 255, 0.1);
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+  --transition-slow: 0.35s ease;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.main-content {
+  flex: 1;
+  padding: var(--spacing-md);
+  padding-bottom: 100px;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Animation utilities */
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive adjustments */
+@media (min-width: 640px) {
+  .main-content {
+    padding: var(--spacing-lg);
+    padding-bottom: 100px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .main-content {
+    max-width: 800px;
+    padding: var(--spacing-xl);
+    padding-bottom: 100px;
+  }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) {
+  button:active,
+  .nav-item:active {
+    transform: scale(0.98);
+    opacity: 0.8;
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
