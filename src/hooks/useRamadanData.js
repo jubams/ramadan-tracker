@@ -1,87 +1,87 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from "react";
 
-const STORAGE_KEY = 'ramadan_tracker_v4';
+const STORAGE_KEY = "ramadan_tracker_v4";
 
 // Single ordered list of all daily items (prayers and goals mixed)
 const DAILY_ITEMS = [
   {
-    id: 'maghrib',
-    type: 'prayer',
-    name: 'Maghrib',
-    icon: '🌇',
+    id: "maghrib",
+    type: "prayer",
+    name: "Maghrib",
+    icon: "🌇",
     sunnaCount: 2,
     weight: 12.5,
   },
   {
-    id: 'isha',
-    type: 'prayer',
-    name: 'Isha',
-    icon: '🌙',
+    id: "isha",
+    type: "prayer",
+    name: "Isha",
+    icon: "🌙",
     sunnaCount: 2,
     weight: 12.5,
   },
   {
-    id: 'quran_tarawih',
-    type: 'goal',
-    goalType: 'number',
-    name: 'Tarawih Reading',
-    label: 'Pages read in Tarawih',
-    icon: '🌃',
+    id: "quran_tarawih",
+    type: "goal",
+    goalType: "number",
+    name: "Tarawih Reading",
+    label: "Pages read in Tarawih",
+    icon: "🌃",
     max: 20,
     target: 20,
     weight: 12.5,
   },
   {
-    id: 'fajr',
-    type: 'prayer',
-    name: 'Fajr',
-    icon: '🌅',
+    id: "fajr",
+    type: "prayer",
+    name: "Fajr",
+    icon: "🌅",
     sunnaCount: 2,
     weight: 12.5,
   },
   {
-    id: 'morning_athkar',
-    type: 'goal',
-    goalType: 'checkbox',
-    name: 'Morning Athkar',
-    label: 'Complete morning Athkar',
-    icon: '🌄',
+    id: "morning_athkar",
+    type: "goal",
+    goalType: "checkbox",
+    name: "Morning Athkar",
+    label: "Complete morning Athkar",
+    icon: "🌄",
     weight: 12.5,
   },
   {
-    id: 'dhuhr',
-    type: 'prayer',
-    name: 'Dhuhr',
-    icon: '☀️',
+    id: "dhuhr",
+    type: "prayer",
+    name: "Dhuhr",
+    icon: "☀️",
     sunnaCount: 6,
     weight: 12.5,
   },
   {
-    id: 'quran_day',
-    type: 'goal',
-    goalType: 'number',
-    name: 'Quran Reading',
-    label: 'Pages read',
-    icon: '📖',
+    id: "quran_day",
+    type: "goal",
+    goalType: "number",
+    name: "Quran Reading",
+    label: "Pages read",
+    icon: "📖",
     max: 20,
     target: 20,
     weight: 12.5,
   },
   {
-    id: 'asr',
-    type: 'prayer',
-    name: 'Asr',
-    icon: '🌤️',
-    sunnaCount: 4,
+    id: "asr",
+    type: "prayer",
+    name: "Asr",
+    icon: "🌤️",
+    sunnaCount: 0,
     weight: 12.5,
   },
   {
-    id: 'evening_athkar',
-    type: 'goal',
-    goalType: 'checkbox',
-    name: 'Evening Athkar',
-    label: 'Complete evening Athkar',
-    icon: '🌆',
+    id: "evening_athkar",
+    type: "goal",
+    goalType: "checkbox",
+    name: "Evening Athkar",
+    label: "Complete evening Athkar",
+    icon: "🌆",
     weight: 12.5,
   },
 ];
@@ -91,15 +91,15 @@ const RAMADAN_DAYS = 30;
 const RAMADAN_2026_START = new Date(2026, 1, 18); // February 18, 2026 (month is 0-indexed)
 
 const initializeItemData = (item) => {
-  if (item.type === 'prayer') {
+  if (item.type === "prayer") {
     return {
       inTime: false,
       athkar: false,
       sunnaCompleted: 0,
       completionPercentage: 0,
     };
-  } else if (item.type === 'goal') {
-    if (item.goalType === 'number') {
+  } else if (item.type === "goal") {
+    if (item.goalType === "number") {
       return {
         value: 0,
         completionPercentage: 0,
@@ -115,10 +115,10 @@ const initializeItemData = (item) => {
 
 const initializeDayData = () => {
   const items = {};
-  DAILY_ITEMS.forEach(item => {
+  DAILY_ITEMS.forEach((item) => {
     items[item.id] = initializeItemData(item);
   });
-  
+
   return {
     items,
     overallCompletion: 0,
@@ -137,30 +137,28 @@ const initializeRamadanData = () => {
 const calculatePrayerCompletion = (itemData, item) => {
   let completed = 0;
   let total = 3;
-  
+
   if (itemData.inTime) completed += 1;
   if (itemData.athkar) completed += 1;
-  
-  const sunnaProgress = item.sunnaCount > 0 
-    ? itemData.sunnaCompleted / item.sunnaCount 
-    : 0;
+
+  const sunnaProgress =
+    item.sunnaCount > 0 ? itemData.sunnaCompleted / item.sunnaCount : 0;
   completed += sunnaProgress;
-  
+
   return Math.round((completed / total) * 100);
 };
 
 const calculateGoalCompletion = (itemData, item) => {
-  if (item.goalType === 'number') {
-    const progress = item.target > 0 
-      ? Math.min(itemData.value / item.target, 1) 
-      : 0;
+  if (item.goalType === "number") {
+    const progress =
+      item.target > 0 ? Math.min(itemData.value / item.target, 1) : 0;
     return Math.round(progress * 100);
   }
   return itemData.completed ? 100 : 0;
 };
 
 const calculateItemCompletion = (itemData, item) => {
-  if (item.type === 'prayer') {
+  if (item.type === "prayer") {
     return calculatePrayerCompletion(itemData, item);
   } else {
     return calculateGoalCompletion(itemData, item);
@@ -168,21 +166,24 @@ const calculateItemCompletion = (itemData, item) => {
 };
 
 const calculateDayCompletion = (dayData) => {
-  let totalPercentage = 0;
+  let totalScore = 0;
+  let totalWeight = 0;
   let completedItems = 0;
-  
-  DAILY_ITEMS.forEach(item => {
+
+  DAILY_ITEMS.forEach((item) => {
     const itemData = dayData.items[item.id];
     const completion = calculateItemCompletion(itemData, item);
-    totalPercentage += (completion * item.weight) / 100;
-    
+    totalScore += completion * item.weight;
+    totalWeight += item.weight;
+
     if (completion === 100) {
       completedItems += 1;
     }
   });
-  
+
   return {
-    overallCompletion: Math.round(totalPercentage),
+    overallCompletion:
+      totalWeight > 0 ? Math.round(totalScore / totalWeight) : 0,
     completedItems,
   };
 };
@@ -194,7 +195,7 @@ export const useRamadanData = () => {
       try {
         return JSON.parse(saved);
       } catch (e) {
-        console.error('Error parsing saved data:', e);
+        console.error("Error parsing saved data:", e);
       }
     }
     return initializeRamadanData();
@@ -203,15 +204,15 @@ export const useRamadanData = () => {
   const [currentDay, setCurrentDay] = useState(() => {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Normalize to start of day
-    
+
     // Reset to midnight for accurate comparison
     const ramadanStart = new Date(RAMADAN_2026_START);
     ramadanStart.setHours(0, 0, 0, 0);
-    
+
     // Calculate days since Ramadan started
     const diffTime = today.getTime() - ramadanStart.getTime();
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
-    
+
     // If before Ramadan, show day 1
     // If during Ramadan, show current day
     // If after Ramadan, show day 30
@@ -250,24 +251,27 @@ export const useRamadanData = () => {
   }, [data]);
 
   const updateItem = useCallback((day, itemId, field, value) => {
-    setData(prevData => {
+    setData((prevData) => {
       const dayData = { ...prevData[day] };
       const items = { ...dayData.items };
       const itemData = { ...items[itemId] };
-      
+
       itemData[field] = value;
-      
+
       // Find the item config
-      const itemConfig = DAILY_ITEMS.find(i => i.id === itemId);
-      itemData.completionPercentage = calculateItemCompletion(itemData, itemConfig);
-      
+      const itemConfig = DAILY_ITEMS.find((i) => i.id === itemId);
+      itemData.completionPercentage = calculateItemCompletion(
+        itemData,
+        itemConfig,
+      );
+
       items[itemId] = itemData;
       dayData.items = items;
-      
+
       const dayStats = calculateDayCompletion(dayData);
       dayData.overallCompletion = dayStats.overallCompletion;
       dayData.completedItems = dayStats.completedItems;
-      
+
       return {
         ...prevData,
         [day]: dayData,
@@ -276,31 +280,37 @@ export const useRamadanData = () => {
   }, []);
 
   const toggleItemExpand = useCallback((itemId) => {
-    setExpandedItem(prev => prev === itemId ? null : itemId);
+    setExpandedItem((prev) => (prev === itemId ? null : itemId));
   }, []);
 
-  const getDayData = useCallback((day) => {
-    const dayData = data[day] || initializeDayData();
-    
-    // Ensure all items exist (for backward compatibility)
-    if (!dayData.items) {
-      dayData.items = {};
-    }
-    
-    DAILY_ITEMS.forEach(item => {
-      if (!dayData.items[item.id]) {
-        dayData.items[item.id] = initializeItemData(item);
+  const getDayData = useCallback(
+    (day) => {
+      const dayData = data[day] || initializeDayData();
+
+      // Ensure all items exist (for backward compatibility)
+      if (!dayData.items) {
+        dayData.items = {};
       }
-    });
-    
-    return dayData;
-  }, [data]);
+
+      DAILY_ITEMS.forEach((item) => {
+        if (!dayData.items[item.id]) {
+          dayData.items[item.id] = initializeItemData(item);
+        }
+      });
+
+      return dayData;
+    },
+    [data],
+  );
 
   const getStatistics = useCallback(() => {
     const days = Object.values(data);
-    const totalCompletion = days.reduce((sum, day) => sum + day.overallCompletion, 0);
+    const totalCompletion = days.reduce(
+      (sum, day) => sum + day.overallCompletion,
+      0,
+    );
     const overallPercentage = Math.round(totalCompletion / RAMADAN_DAYS);
-    
+
     let bestDay = 1;
     let maxCompletion = 0;
     days.forEach((day, index) => {
@@ -321,7 +331,7 @@ export const useRamadanData = () => {
 
     let bestStreak = 0;
     let tempStreak = 0;
-    days.forEach(day => {
+    days.forEach((day) => {
       if (day.overallCompletion === 100) {
         tempStreak++;
         bestStreak = Math.max(bestStreak, tempStreak);
@@ -336,21 +346,25 @@ export const useRamadanData = () => {
       bestDayPercentage: maxCompletion,
       currentStreak,
       bestStreak,
-      totalDaysCompleted: days.filter(day => day.overallCompletion === 100).length,
-      totalItemsCompleted: days.reduce((sum, day) => sum + day.completedItems, 0),
+      totalDaysCompleted: days.filter((day) => day.overallCompletion === 100)
+        .length,
+      totalItemsCompleted: days.reduce(
+        (sum, day) => sum + day.completedItems,
+        0,
+      ),
     };
   }, [data, currentDay]);
 
   const exportData = useCallback(() => {
     const exportObj = {
-      version: '4.0',
+      version: "4.0",
       ramadanData: data,
       exportDate: new Date().toISOString(),
     };
     const dataStr = JSON.stringify(exportObj, null, 2);
-    const blob = new Blob([dataStr], { type: 'application/json' });
+    const blob = new Blob([dataStr], { type: "application/json" });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = url;
     link.download = `ramadan-tracker-${new Date().getFullYear()}.json`;
     document.body.appendChild(link);
@@ -369,19 +383,23 @@ export const useRamadanData = () => {
             setData(imported.ramadanData);
             resolve(true);
           } else {
-            reject(new Error('Invalid data format'));
+            reject(new Error("Invalid data format"));
           }
         } catch (error) {
           reject(error);
         }
       };
-      reader.onerror = () => reject(new Error('Failed to read file'));
+      reader.onerror = () => reject(new Error("Failed to read file"));
       reader.readAsText(file);
     });
   }, []);
 
   const resetData = useCallback(() => {
-    if (window.confirm('Are you sure you want to reset all your progress? This cannot be undone.')) {
+    if (
+      window.confirm(
+        "Are you sure you want to reset all your progress? This cannot be undone.",
+      )
+    ) {
       setData(initializeRamadanData());
     }
   }, []);
@@ -397,7 +415,7 @@ export const useRamadanData = () => {
     // We calculate the approximate Hijri date based on Ramadan 2026
     // Ramadan 1447 AH starts around February 18, 2026
     const hijriDay = dayNumber;
-    const hijriMonth = 'Ramadan';
+    const hijriMonth = "Ramadan";
     const hijriYear = 1447; // 2026 corresponds to 1447 AH
     return { day: hijriDay, month: hijriMonth, year: hijriYear };
   }, []);
