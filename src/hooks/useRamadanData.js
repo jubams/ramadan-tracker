@@ -136,14 +136,15 @@ const initializeRamadanData = () => {
 
 const calculatePrayerCompletion = (itemData, item) => {
   let completed = 0;
-  let total = 3;
+  let total = 2; // Initial points: In time, Athkar
 
   if (itemData.inTime) completed += 1;
   if (itemData.athkar) completed += 1;
 
-  const sunnaProgress =
-    item.sunnaCount > 0 ? itemData.sunnaCompleted / item.sunnaCount : 0;
-  completed += sunnaProgress;
+  if (item.sunnaCount > 0) {
+    total += 1;
+    completed += itemData.sunnaCompleted / item.sunnaCount;
+  }
 
   return Math.round((completed / total) * 100);
 };
